@@ -15,11 +15,14 @@
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "sadist": "./bin/sadist.js"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./config/strict": "./dist/config/strict.js"
   },
-  "files": ["dist", "docs/SKILL.md"],
+  "files": ["dist", "bin", "docs/SKILL.md"],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
@@ -38,6 +41,7 @@
     "vitest": "2.1.9",
     "typescript": "5.6.3",
     "eslint": "9.39.5",
-    "@typescript-eslint/parser": "8.48.1"
+    "@typescript-eslint/parser": "8.48.1",
+    "@types/node": "24.13.3"
   }
 }
