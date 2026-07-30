@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `sadist install` CLI command for project onboarding (`sadist` / `npx sadist install`).
+- CLI flags: `--dry-run`, `--force`, `--no-husky`, `--no-tsconfig`.
+- Package manager detection (`pnpm`, `yarn`, `npm`).
+- Automated configuration setup (`eslint.config.mjs`, `tsconfig.json`, `.husky/pre-commit`, `.gitignore`, `package.json#scripts.lax`).
+- `prepublishOnly` script to ensure clean builds before publishing.
+
 ## [0.1.0] - 2026-07-30
 
 ### Added
