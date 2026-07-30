@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `AGENTS.md` with project maintenance guidelines (releases, code, rules, build, design philosophy).
+
 ## [0.2.0] - 2026-07-30
 
 ### Added
