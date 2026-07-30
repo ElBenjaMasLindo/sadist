@@ -1,4 +1,4 @@
-import strict from "./dist/config/strict.js";
+import strict from "sadist/config/strict";
 import tsParser from "@typescript-eslint/parser";
 
 export default [
