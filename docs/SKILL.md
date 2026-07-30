@@ -1,32 +1,32 @@
 ---
-name: Sadist
+name: sadist-gate
 description: Use when writing or editing TypeScript code inside a repository that has the sadist gate installed (a strict tsc + ts-pattern + ESLint pre-commit gate). Apply before writing any function, type, or commit in such a repo — code that violates these rules will not compile or will fail lint, blocking the commit.
 ---
 
-# Sadist
+# sadist-gate
 
 Write code that passes on the first attempt. These are hard rules, not style preferences.
 
 ## Rules
 
 1. **No `null`/`undefined` in domain types.** Use:
-```ts
+   ```ts
    type Option<T> = { some: true; value: T } | { some: false };
-```
+   ```
 
 2. **No `throw` outside `src/adapters/`.** Return instead:
-```ts
+   ```ts
    type Result<T, E> = { ok: true; value: T } | { ok: false; error: E };
-```
+   ```
 
 3. **Every match on a union uses `ts-pattern` with `.exhaustive()`.**
-```ts
+   ```ts
    import { match } from "ts-pattern";
    match(result)
      .with({ ok: true }, (r) => r.value)
      .with({ ok: false }, (r) => handleError(r.error))
      .exhaustive();
-```
+   ```
    Never `.otherwise()` as a shortcut to skip a case — add the missing `.with()`.
 
 4. **No `class` in domain logic.** Use functions and discriminated unions. Classes are allowed only in `src/adapters/` when an external framework requires them.
@@ -38,9 +38,9 @@ Write code that passes on the first attempt. These are hard rules, not style pre
 7. **No generic type parameter used only once.** If `<T>` appears in one place, delete it.
 
 8. **Primitive IDs use branded types, never bare `string`/`number`.**
-```ts
+   ```ts
    type UserId = string & { readonly __brand: "UserId" };
-```
+   ```
 
 ## Before writing any function
 
@@ -53,3 +53,15 @@ Read the `tsc`/ESLint error verbatim — it names the exact rule and location. F
 ## Scope
 
 This gate catches structural bugs (null handling, unhandled cases, exceptions, unsafe casts). It does not catch business-logic errors — correct types with wrong logic still pass. Test logic separately.
+
+## Gate coverage
+
+Rules enforced by the ESLint gate (commit-blocking):
+1, 2, 4, 6, 7, 8 — plus `any` and `!` from rule 5.
+
+Rules enforced by convention only (not commit-blocking):
+- Rule 3: `.exhaustive()` on `ts-pattern` matches. The gate cannot detect
+  `.otherwise()` misuse — this is a human-review rule.
+- Rule 5 partial: `@ts-ignore`, `@ts-expect-error`, and `as unknown as X`
+  are not machine-enforced. These require `@typescript-eslint` plugin rules
+  which this gate does not bundle.

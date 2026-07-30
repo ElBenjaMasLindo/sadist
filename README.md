@@ -14,19 +14,22 @@ LLMs default to the statistical mode of TypeScript: `any`, silent `null`,
 classes, unhandled `catch` blocks. This isn't a style linter that nudges;
 it's a structural gate that refuses to compile or lint code that leaves
 room for the bugs that gate is built to eliminate — see
-[docs/philosophy.md](docs/philosophy.md) for the reasoning and its
-honest limits (this gate does not, and cannot, catch business-logic bugs;
+[docs/SKILL.md](docs/SKILL.md) for the complete rule set and
+honest coverage (this gate does not, and cannot, catch business-logic bugs;
 only structural ones).
 
 ## Install
 
 ```bash
 npm install --save-dev sadist ts-pattern typescript eslint
-npx sadist init
 ```
 
-`sadist init` writes `tsconfig.json`, `eslint.config.mjs`, and a Husky
-pre-commit hook that runs `tsc --noEmit && eslint .` before every commit.
+Then add to your `eslint.config.mjs`:
+
+```js
+import strict from "sadist/config/strict";
+export default [...strict];
+```
 
 ## For agents
 

@@ -1,0 +1,14 @@
+{
+  "name": "sadist-example",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "ts-pattern": "5.9.0"
+  },
+  "devDependencies": {
+    "sadist": "file:../..",
+    "@typescript-eslint/parser": "8.48.1",
+    "typescript": "5.6.3",
+    "eslint": "9.39.5"
+  }
+}
