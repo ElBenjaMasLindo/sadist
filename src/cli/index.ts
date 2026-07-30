@@ -40,7 +40,7 @@ function runCommand(r: { ok: true; value: string } | { ok: false; error: string 
 function printUsage(): void {
   process.stdout.write(
     [
-      "sadist - merciless TypeScript code quality gate",
+      "sadist - A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability.",
       "",
       "usage:",
       "  sadist install [flags]    configure a project with the gate",

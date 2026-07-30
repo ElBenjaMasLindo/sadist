@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/sadist.svg)](https://www.npmjs.com/package/sadist)
 [![CI](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml/badge.svg)](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml)
 
-A merciless TypeScript code quality gate.
+A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability.
 
 `sadist` combines strict `tsc` compilation, exhaustive pattern matching via
 `ts-pattern`, and a small set of architectural ESLint rules into a single
