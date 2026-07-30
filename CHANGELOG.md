@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Automated configuration setup (`eslint.config.mjs`, `tsconfig.json`, `.husky/pre-commit`, `.gitignore`, `package.json#scripts.lax`).
 - `prepublishOnly` script to ensure clean builds before publishing.
 
+### Changed
+- Project tagline updated to "A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability" across `README.md`, `package.json#description`, and CLI usage output. Added `gate` keyword to `package.json`.
+
 ## [0.1.0] - 2026-07-30
 
 ### Added
