@@ -1,0 +1,32 @@
+{
+  "name": "sadist",
+  "version": "0.1.0",
+  "description": "A zero-mercy TypeScript gate for LLM-generated code: nothing lands until it can't structurally fail.",
+  "license": "MPL-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": ["dist", "docs/SKILL.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "prepare": "husky"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.4",
+    "eslint": ">=9"
+  },
+  "dependencies": {
+    "ts-pattern": "5.9.0"
+  },
+  "devDependencies": {
+    "husky": "9",
+    "vitest": "2",
+    "typescript": "5.6",
+    "eslint": "9"
+  }
+}
