@@ -1,7 +1,7 @@
 {
   "name": "sadist",
   "version": "0.1.0",
-  "description": "A zero-mercy TypeScript gate for LLM-generated code: nothing lands until it can't structurally fail.",
+  "description": "A merciless TypeScript code quality gate.",
   "license": "MPL-2.0",
   "type": "module",
   "main": "./dist/index.js",

@@ -1,6 +1,6 @@
 # sadist
 
-A zero-mercy TypeScript gate for LLM-generated code.
+A merciless TypeScript code quality gate.
 
 `sadist` combines strict `tsc` compilation, exhaustive pattern matching via
 `ts-pattern`, and a small set of architectural ESLint rules into a single
@@ -10,10 +10,10 @@ flag for convenience.
 
 ## Why
 
-LLMs default to the statistical mode of TypeScript: `any`, silent `null`,
-classes, unhandled `catch` blocks. This isn't a style linter that nudges;
-it's a structural gate that refuses to compile or lint code that leaves
-room for the bugs that gate is built to eliminate — see
+`any`, silent `null`, unhandled `catch` blocks, and `class` abuse are the
+most common sources of preventable bugs in TypeScript codebases. This isn't
+a style linter that nudges; it's a structural gate that refuses to compile
+or lint code that leaves room for them — see
 [docs/SKILL.md](docs/SKILL.md) for the complete rule set and
 honest coverage (this gate does not, and cannot, catch business-logic bugs;
 only structural ones).
@@ -33,9 +33,9 @@ export default [...strict];
 
 ## For agents
 
-If you're an LLM writing code against this repo, read
-[docs/SKILL.md](docs/SKILL.md) first. It's the complete rule set in one
-page.
+If you're generating code programmatically (LLM, codegen, or otherwise),
+read [docs/SKILL.md](docs/SKILL.md) first. It's the complete rule set in
+one page.
 
 ## License
 
