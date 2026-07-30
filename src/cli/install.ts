@@ -191,6 +191,7 @@ export function applyConfigs(
   flags: InstallFlags,
   force: boolean,
 ): Result<string, string> {
+  if (flags.dryRun) return { ok: true, value: "dry-run" };
   return writeAllConfigs({ flags, force });
 }
 
@@ -226,8 +227,8 @@ export function applyPackageJson(
 ): Result<string, string> {
   if (flags.dryRun) return { ok: true, value: "dry-run" };
   const currentPkgR = readPkg();
-  const basePkg = currentPkgR.ok ? currentPkgR.value : pkg;
-  const next = buildNextPkg(basePkg, flags);
+  if (!currentPkgR.ok) return currentPkgR;
+  const next = buildNextPkg(currentPkgR.value, flags);
   const json = `${JSON.stringify(next, null, 2)}\n`;
   return writeText("package.json", json);
 }
@@ -289,14 +290,7 @@ function runWith(flags: InstallFlags): Result<string, string> {
   const planR = buildPlan(pkgR.value, flags);
   if (!planR.ok) return planR;
   printPlan(planR.value);
-  if (!confirmRun(flags)) return { ok: false, error: "aborted by user" };
   return executeSteps(pkgR.value, planR.value, flags);
-}
-
-function confirmRun(flags: InstallFlags): boolean {
-  if (flags.force || flags.dryRun) return true;
-  if (!process.stdin.isTTY) return true;
-  return true;
 }
 
 function executeSteps(
