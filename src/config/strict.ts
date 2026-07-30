@@ -1,6 +1,7 @@
+import type { Linter } from "eslint";
 import { rules } from "../rules/index.js";
 
-const strictConfig = [
+const strictConfig: Linter.Config[] = [
   {
     plugins: {
       sadist: { rules },

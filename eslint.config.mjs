@@ -1,8 +1,13 @@
 import strict from "./dist/config/strict.js";
+import tsParser from "@typescript-eslint/parser";
 
 export default [
   ...strict,
   {
-    ignores: ["dist/**", "node_modules/**", "examples/**"]
-  }
+    files: ["**/*.ts"],
+    languageOptions: { parser: tsParser },
+  },
+  {
+    ignores: ["dist/**", "node_modules/**", "examples/**"],
+  },
 ];
