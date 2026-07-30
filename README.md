@@ -22,6 +22,8 @@ only structural ones).
 
 ```bash
 npm install --save-dev sadist ts-pattern typescript eslint
+# or
+pnpm add -D sadist ts-pattern typescript eslint
 ```
 
 Then add to your `eslint.config.mjs`:
