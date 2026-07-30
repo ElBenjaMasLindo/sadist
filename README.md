@@ -31,12 +31,9 @@ import strict from "sadist/config/strict";
 export default [...strict];
 ```
 
-## For agents
-
-If you're generating code programmatically (LLM, codegen, or otherwise),
-read [docs/SKILL.md](docs/SKILL.md) first. It's the complete rule set in
-one page.
-
 ## License
 
-MPL-2.0 — see [LICENSE](LICENSE).
+[Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/) — behaves like MIT when you
+`npm install` and use it as-is: no copyleft obligation on your code. Only
+applies if you modify sadist's own source files. See [LICENSE](LICENSE) for
+full terms.
