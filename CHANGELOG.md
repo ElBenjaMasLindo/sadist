@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Added
 - `AGENTS.md` with project maintenance guidelines (releases, code, rules, build, design philosophy).
 
+### Changed
+- `README.md` restructured: added Quickstart (CLI) section, Manual Setup with numbered steps, and updated rules table with all 9 ESLint rules.
+
 ## [0.2.0] - 2026-07-30
 
 ### Added

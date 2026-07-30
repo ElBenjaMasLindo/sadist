@@ -32,12 +32,37 @@ pnpm add -D sadist
 
 Requires `typescript >=5.4` and `eslint >=9` as peer dependencies (likely already in your project).
 
+## Quickstart (Experimental CLI)
+
+```bash
+sadist install
+```
+
+The C.L.I installation process may, in semi-rare cases, fail. If that happens, follow the manual setup below.
+
+Flags:
+
+| Flag | Effect |
+|------|--------|
+| `--no-husky` | Skip pre-commit hook setup |
+| `--no-tsconfig` | Skip `tsconfig.json` creation |
+| `--force` | Overwrite existing files |
+| `--dry-run` | Print the plan, don't apply changes |
+
+Run `sadist --help` for the full list.
+
+## Manual Setup
+
+### 1. ESLint config
+
 Create `eslint.config.mjs`:
 
 ```js
 import strict from "sadist/config/strict";
 export default [...strict];
 ```
+
+### 2. Gate script
 
 Add a gate script to `package.json`:
 
@@ -49,7 +74,7 @@ Add a gate script to `package.json`:
 }
 ```
 
-Run the gate:
+### 3. Run the gate
 
 ```bash
 npm run lax
@@ -96,7 +121,15 @@ type User = {
 | `no-any-in-domain-types` | `any` in type aliases, interfaces, function signatures |
 | `no-null-in-domain-types` | `null`/`undefined` in type aliases, interfaces, properties |
 | `no-primitive-obsession` | Raw primitives (`string`, `number`, `boolean`) in object properties |
+| `no-class-in-domain` | `class` in domain logic (allowed only in `src/adapters/`) |
+| `no-non-null-assertion-in-domain` | `!` non-null assertions |
+| `no-single-use-generics` | Generic type parameters used only once |
+| `no-ts-pattern-otherwise` | `.otherwise()` instead of `.exhaustive()` on `ts-pattern` matches |
+| `no-ts-suppressions` | `@ts-ignore`, `@ts-expect-error`, `as unknown as X` |
 | `no-throw-outside-adapters` | `throw` statements outside `src/adapters/` |
+| `complexity` | Cyclomatic complexity > 6 |
+| `max-lines-per-function` | Functions > 20 lines |
+| `max-params` | Functions > 3 parameters |
 
 ### Config
 
@@ -105,7 +138,7 @@ import strict from "sadist/config/strict";
 export default [...strict];
 ```
 
-Enables all 4 rules as errors. No warning-only mode, no partial overrides.
+Enables all rules as errors. No warning-only mode, no partial overrides.
 
 ## Versioning
 
