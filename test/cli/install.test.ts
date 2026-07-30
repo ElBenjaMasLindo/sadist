@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyHusky, applyPackageJson } from "../../src/cli/install.js";
+import { applyConfigs, applyHusky, applyPackageJson } from "../../src/cli/install.js";
 import type { InstallFlags, PkgJson } from "../../src/cli/types.js";
 
 const baseFlags: InstallFlags = {
@@ -22,6 +22,14 @@ const basePkg: PkgJson = {
 describe("applyPackageJson (dry-run)", () => {
   it("does not write to disk and reports dry-run", () => {
     const r = applyPackageJson(basePkg, baseFlags);
+    expect(r.ok).toBe(true);
+    if (r.ok) expect(r.value).toBe("dry-run");
+  });
+});
+
+describe("applyConfigs (dry-run)", () => {
+  it("does not write to disk and reports dry-run", () => {
+    const r = applyConfigs(baseFlags, false);
     expect(r.ok).toBe(true);
     if (r.ok) expect(r.value).toBe("dry-run");
   });
