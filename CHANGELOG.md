@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-30
+
 ### Added
 - `sadist install` CLI command for project onboarding (`sadist` / `npx sadist install`).
 - CLI flags: `--dry-run`, `--force`, `--no-husky`, `--no-tsconfig`.

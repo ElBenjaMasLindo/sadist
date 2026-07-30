@@ -1,6 +1,6 @@
 {
   "name": "sadist",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability.",
   "license": "MPL-2.0",
   "keywords": ["typescript", "eslint", "pre-commit", "code-quality", "strict", "gate", "lint"],
