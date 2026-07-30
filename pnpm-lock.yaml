@@ -28,25 +28,6 @@ importers:
         specifier: 2.1.9
         version: 2.1.9(supports-color@7.2.0)
 
-  examples/minimal-project:
-    dependencies:
-      ts-pattern:
-        specifier: 5.9.0
-        version: 5.9.0
-    devDependencies:
-      '@typescript-eslint/parser':
-        specifier: 8.48.1
-        version: 8.48.1(eslint@9.39.5(supports-color@7.2.0))(supports-color@7.2.0)(typescript@5.6.3)
-      eslint:
-        specifier: 9.39.5
-        version: 9.39.5(supports-color@7.2.0)
-      sadist:
-        specifier: file:../..
-        version: file:(eslint@9.39.5(supports-color@7.2.0))(typescript@5.6.3)
-      typescript:
-        specifier: 5.6.3
-        version: 5.6.3
-
 packages:
 
   '@esbuild/aix-ppc64@0.21.5':
@@ -799,12 +780,6 @@ packages:
     resolution: {integrity: sha512-Gu0c0iH9FzgX1L1t7ByIbbS3Vmdz+6KHm/EsqmmC71gUQ82yvZRkTK6XzrFObSka91WUVdynqp6nsfilzr5k6Q==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
-
-  'sadist@file:':
-    resolution: {directory: '', type: directory}
-    peerDependencies:
-      eslint: '>=9'
-      typescript: '>=5.4'
 
   semver@7.8.5:
     resolution: {integrity: sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==}
@@ -1627,12 +1602,6 @@ snapshots:
       '@rollup/rollup-win32-x64-gnu': 4.62.3
       '@rollup/rollup-win32-x64-msvc': 4.62.3
       fsevents: 2.3.3
-
-  sadist@file:(eslint@9.39.5(supports-color@7.2.0))(typescript@5.6.3):
-    dependencies:
-      eslint: 9.39.5(supports-color@7.2.0)
-      ts-pattern: 5.9.0
-      typescript: 5.6.3
 
   semver@7.8.5: {}
 
