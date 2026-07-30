@@ -1,5 +1,9 @@
 # sadist
 
+[![License: MPL-2.0](https://img.shields.io/badge/License-MPL--2.0-blue.svg)](LICENSE)
+[![npm version](https://img.shields.io/npm/v/sadist.svg)](https://www.npmjs.com/package/sadist)
+[![CI](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml/badge.svg)](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml)
+
 A merciless TypeScript code quality gate.
 
 `sadist` combines strict `tsc` compilation, exhaustive pattern matching via
@@ -21,17 +25,102 @@ only structural ones).
 ## Install
 
 ```bash
-npm install --save-dev sadist ts-pattern typescript eslint
+npm install --save-dev sadist
 # or
-pnpm add -D sadist ts-pattern typescript eslint
+pnpm add -D sadist
 ```
 
-Then add to your `eslint.config.mjs`:
+Requires `typescript >=5.4` and `eslint >=9` as peer dependencies (likely already in your project).
+
+Create `eslint.config.mjs`:
 
 ```js
 import strict from "sadist/config/strict";
 export default [...strict];
 ```
+
+Add a gate script to `package.json`:
+
+```json
+{
+  "scripts": {
+    "lax": "eslint . && tsc --noEmit"
+  }
+}
+```
+
+Run the gate:
+
+```bash
+npm run lax
+```
+
+If it passes, commit. If it fails, fix the errors first.
+
+## Usage
+
+Example violation of `no-null-in-domain-types`:
+
+```ts
+// ❌ Fails the gate
+type User = {
+  id: string;
+  email: string | null;
+};
+```
+
+Error output:
+
+```
+src/user.ts:3:10 - error: Domain types must not contain null or undefined. Use Option<T> instead.
+```
+
+Fix with `Option<T>`:
+
+```ts
+// ✅ Passes the gate
+import { Option } from "sadist";
+
+type User = {
+  id: string;
+  email: Option<string>;
+};
+```
+
+## API
+
+### Rules
+
+| Rule | What it blocks |
+|------|----------------|
+| `no-any-in-domain-types` | `any` in type aliases, interfaces, function signatures |
+| `no-null-in-domain-types` | `null`/`undefined` in type aliases, interfaces, properties |
+| `no-primitive-obsession` | Raw primitives (`string`, `number`, `boolean`) in object properties |
+| `no-throw-outside-adapters` | `throw` statements outside `src/adapters/` |
+
+### Config
+
+```js
+import strict from "sadist/config/strict";
+export default [...strict];
+```
+
+Enables all 4 rules as errors. No warning-only mode, no partial overrides.
+
+## Versioning
+
+`0.x` — breaking changes allowed in MINOR versions. `1.0.0` means a public API commitment; don't expect it until the rule set is stable.
+
+## Known limitations
+
+- Does not catch business-logic bugs (only structural ones)
+- Requires `ts-pattern` for exhaustive pattern matching (not enforced by rules)
+- No autofix for architectural violations (by design)
+- Assumes `src/adapters/` directory exists for throw statements
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for rules on adding new rules and pre-PR checks.
 
 ## License
 
