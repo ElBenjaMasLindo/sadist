@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Renamed pre-commit script from `lax` to `gate` (breaking: consumers must rename `scripts.lax` to `scripts.gate` in their `package.json`).
+
 ## [0.4.0] - 2026-07-31
 
 ### Added

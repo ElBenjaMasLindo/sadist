@@ -83,7 +83,7 @@ Add a gate script to `package.json`:
 ```json
 {
   "scripts": {
-    "lax": "eslint . && tsc --noEmit"
+    "gate": "eslint . && tsc --noEmit"
   }
 }
 ```
@@ -91,7 +91,7 @@ Add a gate script to `package.json`:
 ### 3. Run the gate
 
 ```bash
-npm run lax
+npm run gate
 ```
 
 If it passes, commit. If it fails, fix the errors first.

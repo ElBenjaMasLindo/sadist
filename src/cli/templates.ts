@@ -30,9 +30,9 @@ export const tsconfigTemplate = `{
 `;
 
 export function preCommitTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {
-  if (pkgManager === "pnpm") return "pnpm run lax\n";
-  if (pkgManager === "yarn") return "yarn lax\n";
-  return "npm run lax\n";
+  if (pkgManager === "pnpm") return "pnpm run gate\n";
+  if (pkgManager === "yarn") return "yarn gate\n";
+  return "npm run gate\n";
 }
 
 export const gitignoreTemplate = `# dependencies
