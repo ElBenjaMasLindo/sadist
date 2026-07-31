@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-07-31
+
 ### Changed
 - Renamed pre-commit script from `lax` to `gate` (breaking: consumers must rename `scripts.lax` to `scripts.gate` in their `package.json`).
 
@@ -68,7 +70,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Example project (`examples/minimal-project`)
 - CI workflow (GitHub Actions)
 
-[Unreleased]: https://github.com/ElBenjaMasLindo/folex/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/ElBenjaMasLindo/folex/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.1.0...v0.2.0
