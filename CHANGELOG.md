@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-07-31
+
 ### Fixed
 - Skill template loading: embed `docs/SKILL.md` in memory at build time via `scripts/version.mjs` instead of reading from disk via relative paths at runtime, preventing `cannot read shipped skill` failures in npm-installed environments.
 - Package publish script: updated `prepublishOnly` in `package.json` to use `npm run build` instead of `pnpm run build`.
@@ -75,7 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - CI workflow (GitHub Actions)
 
 
-[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.2.0...v0.3.0
