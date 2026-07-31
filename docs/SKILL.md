@@ -1,9 +1,11 @@
 ---
-name: sadist-gate
-description: Use when writing or editing TypeScript code inside a repository that has the sadist gate installed (a strict tsc + ts-pattern + ESLint pre-commit gate). Apply before writing any function, type, or commit in such a repo — code that violates these rules will not compile or will fail lint, blocking the commit.
+name: sadist
+description: Pre-commit coding rules for TypeScript projects gated by the sadist linter. Read this skill before writing any function, and when tsc or ESLint rejects a commit. Covers null handling, error returns, exhaustive pattern matching, domain types, and structural constraints the gate enforces automatically.
+compatibility: Requires Node.js 18+ and a TypeScript project with "sadist" installed
+license: MPL-2.0
+metadata:
+  version: "0.3.0"
 ---
-
-# sadist-gate
 
 Write code that passes on the first attempt. These are hard rules, not style preferences.
 

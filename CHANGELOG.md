@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- `scripts/version.mjs`: now also syncs `package.json#version` into the `metadata.version` field of `docs/SKILL.md` during `prebuild`, keeping the published skill version in lockstep with the package.
+
+### Changed
+- `docs/SKILL.md`: now uses YAML frontmatter (`name`, `description`, `compatibility`, `license`, `metadata.version`) so the published skill file is self-describing and version-stamped.
+
 ## [0.3.0] - 2026-07-30
 
 ### Added
