@@ -25,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `src/rules/index.ts`: now exports 6 rules (`no-throw-outside-adapters`, `no-null-in-domain-types`, `no-single-use-generics`, `no-primitive-obsession`, `require-ts-pattern-exhaustive`, `no-ts-suppressions`).
 - `src/cli/install.ts`: `computeMissing` reads the sadist version from `src/cli/version.ts` (generated at build time) instead of hardcoding `"0.1.0"`. Adds `@typescript-eslint/eslint-plugin` to the dev dependencies installed for the consumer.
 - `package.json`: added `@typescript-eslint/eslint-plugin` (8.48.1) as a `dependency` so the config's plugin import resolves at consumer load time. Added `prebuild` script.
-- `docs/SKILL.md`: Gate coverage section updated — all 8 rules are now machine-enforced, with rule 4 delegated to `no-restricted-syntax` and rule 5 split across `@typescript-eslint/no-explicit-any`, `@typescript-eslint/no-non-null-assertion`, `@typescript-eslint/ban-ts-comment`, and `sadist/no-ts-suppressions`.
+- `docs/SKILL.md`: removed the "Gate coverage" section; rule coverage is now visible directly in `src/config/strict.ts`.
 - Tests updated to reflect new behavior: `no-primitive-obsession` (branded type via alias instead of inline intersection), `no-throw-outside-adapters` (filename exemption moved to config). New tests added for `require-ts-pattern-exhaustive` and `no-ts-suppressions`.
 
 ## [0.2.0] - 2026-07-30
