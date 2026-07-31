@@ -1,4 +1,5 @@
 import { match, P } from "ts-pattern";
+import { VERSION } from "./version.js";
 import {
   hasDep,
   pathExists,
@@ -316,10 +317,11 @@ function computeMissing(
   flags: InstallFlags,
 ): readonly MissingDep[] {
   const required: readonly MissingDep[] = [
-    { name: "sadist", class: "dev", range: "0.1.0" },
+    { name: "sadist", class: "dev", range: VERSION },
     { name: "typescript", class: "dev", range: "5.6.3" },
     { name: "eslint", class: "dev", range: "9.39.5" },
     { name: "@typescript-eslint/parser", class: "dev", range: "8.48.1" },
+    { name: "@typescript-eslint/eslint-plugin", class: "dev", range: "8.48.1" },
     { name: "ts-pattern", class: "prod", range: "5.9.0" },
     ...(flags.noHusky
       ? []

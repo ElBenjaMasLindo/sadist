@@ -2,6 +2,7 @@
 node_modules/
 .pnpm-store/
 dist/
+src/cli/version.ts
 
 # Nix
 .direnv/
