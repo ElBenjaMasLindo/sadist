@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-07-31
+
 ### Fixed
 - `sadist install`: move `applySkill` step before `applyHusky` so the skill is always installed even when husky setup fails due to a missing `.git` repository.
 
@@ -85,7 +87,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - CI workflow (GitHub Actions)
 
 
-[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.2...HEAD
+[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.3...HEAD
+[0.5.3]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.4.0...v0.5.0
