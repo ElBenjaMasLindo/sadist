@@ -38,16 +38,16 @@ describe("tsconfigTemplate", () => {
 });
 
 describe("preCommitTemplate", () => {
-  it("runs npm run lax by default", () => {
-    expect(preCommitTemplate()).toContain("npm run lax");
+  it("runs npm run gate by default", () => {
+    expect(preCommitTemplate()).toContain("npm run gate");
   });
 
-  it("runs pnpm run lax for pnpm", () => {
-    expect(preCommitTemplate("pnpm")).toContain("pnpm run lax");
+  it("runs pnpm run gate for pnpm", () => {
+    expect(preCommitTemplate("pnpm")).toContain("pnpm run gate");
   });
 
-  it("runs yarn lax for yarn", () => {
-    expect(preCommitTemplate("yarn")).toContain("yarn lax");
+  it("runs yarn gate for yarn", () => {
+    expect(preCommitTemplate("yarn")).toContain("yarn gate");
   });
 });
 

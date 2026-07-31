@@ -23,7 +23,7 @@ import type {
   Result,
 } from "./types.js";
 
-const LAX_SCRIPT = "eslint . && tsc --noEmit";
+const GATE_SCRIPT = "eslint . && tsc --noEmit";
 const PREPARE_SCRIPT = "husky";
 
 export function buildPlan(
@@ -51,7 +51,7 @@ function emptyOut(): PlanOut {
 function collectPlans(pkg: PkgJson, flags: InstallFlags, out: PlanOut): void {
   planEslint(out);
   planTsconfig(flags, out);
-  planLaxScript(pkg, out);
+  planGateScript(pkg, out);
   planModuleType(pkg, out);
   planHusky(flags, pkg, out);
   planGitignore(out);
@@ -79,15 +79,15 @@ function planTsconfig(flags: InstallFlags, out: PlanOut): void {
   );
 }
 
-function planLaxScript(pkg: PkgJson, out: PlanOut): void {
-  const current = pkg.scripts["lax"];
+function planGateScript(pkg: PkgJson, out: PlanOut): void {
+  const current = pkg.scripts["gate"];
   if (!current) {
-    out.create.push("package.json#scripts.lax");
+    out.create.push("package.json#scripts.gate");
     return;
   }
-  if (current !== LAX_SCRIPT) {
+  if (current !== GATE_SCRIPT) {
     out.warn.push(
-      `package.json#scripts.lax exists with value "${current}"; expected "${LAX_SCRIPT}"`,
+      `package.json#scripts.gate exists with value "${current}"; expected "${GATE_SCRIPT}"`,
     );
   }
 }
@@ -250,7 +250,7 @@ function buildNextPkg(
 
 function mergeScripts(pkg: PkgJson, flags: InstallFlags): Record<string, string> {
   const scripts: Record<string, string> = { ...pkg.scripts };
-  if (!scripts["lax"]) scripts["lax"] = LAX_SCRIPT;
+  if (!scripts["gate"]) scripts["gate"] = GATE_SCRIPT;
   if (!flags.noHusky && !scripts["prepare"]) {
     scripts["prepare"] = PREPARE_SCRIPT;
   }
