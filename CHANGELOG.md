@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-07-31
+
 ### Fixed
 - Skill template loading: embed `docs/SKILL.md` in memory at build time via `scripts/version.mjs` instead of reading from disk via relative paths at runtime, preventing `cannot read shipped skill` failures in npm-installed environments.
 - Package publish script: updated `prepublishOnly` in `package.json` to use `npm run build` instead of `pnpm run build`.
