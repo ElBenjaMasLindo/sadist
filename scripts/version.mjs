@@ -18,8 +18,4 @@ const versionRe = /(?<=metadata:\n)  version: "[^"]*"/;
 if (!versionRe.test(skill)) {
   throw new Error(`scripts/version.mjs: version line not found in docs/SKILL.md`);
 }
-const updatedSkill = skill.replace(versionRe, `  version: ${JSON.stringify(version)}`);
-writeFileSync(skillPath, updatedSkill);
-
-const templateOut = resolve(here, "..", "src", "cli", "embedded_skill.ts");
-writeFileSync(templateOut, `export const EMBEDDED_SKILL = ${JSON.stringify(updatedSkill)};\n`);
+writeFileSync(skillPath, skill.replace(versionRe, `  version: ${JSON.stringify(version)}`));
