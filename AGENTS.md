@@ -2,6 +2,7 @@
 - Commits: [Conventional Commits](https://www.conventionalcommits.org/).
 - Version in `package.json`. CHANGELOG follows [Keep a Changelog](https://keepachangelog.com/).
 - Bump: edit `version` + add `CHANGELOG.md` entry. Move `[Unreleased]` → version header before publish.
+- Run `pnpm run build` before release.
 - SemVer: `0.x` → breaking in MINOR. `1.0.0` → stable API.
 
 # Code

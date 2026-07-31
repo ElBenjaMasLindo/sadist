@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - `docs/SKILL.md`: now uses YAML frontmatter (`name`, `description`, `compatibility`, `license`, `metadata.version`) so the published skill file is self-describing and version-stamped.
+- `AGENTS.md`: added reminder to run `pnpm run build` before publishing to sync `docs/SKILL.md` version.
 
 ## [0.3.0] - 2026-07-30
 
