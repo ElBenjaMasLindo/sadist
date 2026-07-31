@@ -35,10 +35,10 @@ Requires `typescript >=5.4` and `eslint >=9` as peer dependencies (likely alread
 ## Quickstart (Experimental CLI)
 
 ```bash
-sadist install
+npx sadist install
+# or
+pnpm dlx sadist install
 ```
-
-The C.L.I installation process may, in semi-rare cases, fail. If that happens, follow the manual setup below.
 
 Flags:
 
@@ -50,6 +50,8 @@ Flags:
 | `--dry-run` | Print the plan, don't apply changes |
 
 Run `sadist --help` for the full list.
+
+The C.L.I installation process may, in semi-rare cases, fail. If that happens, follow the manual setup below.
 
 ## Manual Setup
 
