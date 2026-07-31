@@ -4,7 +4,7 @@ description: Pre-commit coding rules for TypeScript projects gated by the sadist
 compatibility: Requires Node.js 18+ and a TypeScript project with "sadist" installed
 license: MPL-2.0
 metadata:
-  version: "0.4.0"
+  version: "0.5.0"
 ---
 
 Write code that passes on the first attempt. These are hard rules, not style preferences.
