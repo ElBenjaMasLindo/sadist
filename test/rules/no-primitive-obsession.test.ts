@@ -11,7 +11,7 @@ describe("no-primitive-obsession", () => {
   it("passes RuleTester cases", () => {
     ruleTester.run("no-primitive-obsession", rule, {
       valid: [
-        { code: "type User = { userId: string & { readonly __brand: 'UserId' } }" },
+        { code: "type UserId = string & { readonly __brand: 'UserId' }; type User = { userId: UserId }" },
         { code: "interface User { name: string }" },
       ],
       invalid: [

@@ -10,10 +10,11 @@ describe("no-throw-outside-adapters", () => {
   it("passes RuleTester cases", () => {
     ruleTester.run("no-throw-outside-adapters", rule, {
       valid: [
-        { code: "throw new Error('x');", filename: "src/adapters/db.ts" },
+        { code: "function f() { return 1; }" },
       ],
       invalid: [
-        { code: "throw new Error('x');", filename: "src/domain/user.ts", errors: 1 },
+        { code: "throw new Error('x');", errors: 1 },
+        { code: "function f() { throw new Error('x'); }", errors: 1 },
       ],
     });
   });

@@ -5,28 +5,22 @@ const noNullInDomainTypes = {
     type: "problem" as const,
     docs: {
       description:
-        "No null or undefined in type aliases or interfaces outside src/adapters/.",
+        "No null or undefined anywhere in domain code (src/adapters/ is exempted via config, not by this rule). Use Option<T> instead.",
     },
     schema: [],
   },
   create(context: Rule.RuleContext) {
-    const filename = context.filename ?? context.getFilename();
-    if (filename.includes("/adapters/")) return {};
-
-    function report(msg: string) {
+    function report(kind: string) {
       return (node: Rule.Node) => {
         context.report({
           node,
-          message: `No ${msg} in domain types. Use Option<T> instead.`,
+          message: `No ${kind} in domain code. Use Option<T> instead.`,
         });
       };
     }
-
     return {
-      "TSTypeAliasDeclaration TSNullKeyword": report("null"),
-      "TSTypeAliasDeclaration TSUndefinedKeyword": report("undefined"),
-      "TSInterfaceDeclaration TSNullKeyword": report("null"),
-      "TSInterfaceDeclaration TSUndefinedKeyword": report("undefined"),
+      TSNullKeyword: report("null"),
+      TSUndefinedKeyword: report("undefined"),
     };
   },
 } satisfies Rule.RuleModule;

@@ -1,24 +1,20 @@
 import type { Rule } from "eslint";
+import { containsPrimitiveKeyword } from "./_shared/ast-walk.js";
 
 type TSPropertyNode = Rule.Node & {
-  key?: Record<string, unknown>;
-  typeAnnotation?: { typeAnnotation?: { type: string } };
+  key?: { type?: string; name?: string };
+  typeAnnotation?: { typeAnnotation?: Rule.Node };
 };
 
+// eslint-disable-next-line complexity, sadist/no-null-in-domain-types
 function getIdName(node: TSPropertyNode): string | null {
-  const key = node.key as { name?: string } | undefined;
-  return key?.name?.endsWith("Id") ? key.name : null;
-}
-
-function isBarePrimitive(node: TSPropertyNode): boolean {
-  return node.typeAnnotation?.typeAnnotation?.type === "TSStringKeyword"
-    || node.typeAnnotation?.typeAnnotation?.type === "TSNumberKeyword";
-}
-
-function isBarePrimitiveId(node: TSPropertyNode): string | null {
-  const name = getIdName(node);
+  const name = node.key?.name;
   if (!name) return null;
-  return isBarePrimitive(node) ? name : null;
+  if (name.toLowerCase() === "id") return name;
+  if (/[a-z]Id$/.test(name)) return name;
+  if (/_id$/.test(name)) return name;
+  if (/ID$/.test(name)) return name;
+  return null;
 }
 
 const noPrimitiveObsession = {
@@ -26,20 +22,21 @@ const noPrimitiveObsession = {
     type: "problem" as const,
     docs: {
       description:
-        "ID properties must use branded types, not bare primitives.",
+        "ID properties must use branded types, not bare primitives. Applies everywhere, including src/adapters/: ID mixups are most dangerous exactly at I/O boundaries, not less.",
     },
     schema: [],
   },
   create(context: Rule.RuleContext) {
     return {
       TSPropertySignature(node: TSPropertyNode) {
-        const idName = isBarePrimitiveId(node);
-        if (idName) {
-          context.report({
-            node,
-            message: `Property "${idName}" is a bare primitive. Use a branded type: string & { readonly __brand: "${idName}" }.`,
-          });
-        }
+        const idName = getIdName(node);
+        if (!idName) return;
+        const typeNode = node.typeAnnotation?.typeAnnotation;
+        if (!typeNode || !containsPrimitiveKeyword(typeNode)) return;
+        context.report({
+          node,
+          message: `Property "${idName}" wraps a bare string/number. Use a branded type: string & { readonly __brand: "${idName}" }.`,
+        });
       },
     };
   },

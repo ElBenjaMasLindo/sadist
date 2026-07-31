@@ -1,21 +1,17 @@
 import type { Rule } from "eslint";
+import { countTypeReferences } from "./_shared/ast-walk.js";
 
-type TypeParams = {
-  params: Array<{ name: { name: string } }>;
-};
-
+type TypeParams = { params: Array<{ name: { name: string } }> };
 type GenericNode = Rule.Node & { typeParameters?: TypeParams };
 
 function check(context: Rule.RuleContext, node: GenericNode): void {
   if (!node.typeParameters) return;
-  const fullText = (context.sourceCode ?? context.getSourceCode()).getText(node);
   for (const param of node.typeParameters.params) {
     const name = param.name.name;
-    const matches = fullText.match(new RegExp(`\\b${name}\\b`, "g")) ?? [];
-    if (matches.length <= 2) {
+    if (countTypeReferences(node, name) <= 1) {
       context.report({
         node,
-        message: `Generic "${name}" is used only once. Remove it or use it in more than one place.`,
+        message: `Generic "${name}" is used in fewer than two places. Remove it or use it in more than one place.`,
       });
     }
   }
@@ -24,7 +20,7 @@ function check(context: Rule.RuleContext, node: GenericNode): void {
 const noSingleUseGenerics = {
   meta: {
     type: "problem" as const,
-    docs: { description: "No generic type parameter used only once." },
+    docs: { description: "No generic type parameter used in fewer than two places." },
     schema: [],
   },
   create(context: Rule.RuleContext) {

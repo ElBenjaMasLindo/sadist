@@ -3,18 +3,16 @@ import type { Rule } from "eslint";
 const noThrowOutsideAdapters = {
   meta: {
     type: "problem" as const,
-    docs: { description: "No throw statements outside src/adapters/." },
+    docs: {
+      description:
+        "No throw statements in domain code (src/adapters/ is exempted via config, not by this rule). Return a Result instead.",
+    },
     schema: [],
   },
   create(context: Rule.RuleContext) {
-    const filename = context.filename ?? context.getFilename();
-    if (filename.includes("/adapters/")) return {};
     return {
       ThrowStatement(node: Rule.Node) {
-        context.report({
-          node,
-          message: "No throw outside src/adapters/. Return a Result instead.",
-        });
+        context.report({ node, message: "No throw in domain code. Return a Result instead." });
       },
     };
   },
