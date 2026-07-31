@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-07-30
+
 ### Added
 - `AGENTS.md` with project maintenance guidelines (releases, code, rules, build, design philosophy).
 - `require-ts-pattern-exhaustive` rule: enforces `.exhaustive()` as the terminal call on `ts-pattern` chains. Catches both `.otherwise()` and chains with no terminal call.
@@ -52,3 +54,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Pre-commit gate integration (build + lint + test)
 - Example project (`examples/minimal-project`)
 - CI workflow (GitHub Actions)
+
+[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/ElBenjaMasLindo/sadist/releases/tag/v0.1.0
