@@ -305,8 +305,8 @@ function executeSteps(
     () => installMissing(plan, flags),
     () => applyPackageJson(pkg, flags),
     () => applyConfigs(flags, flags.force),
-    () => applyHusky(flags, plan.pkgManager),
     () => applySkill({ force: flags.force, dryRun: flags.dryRun }),
+    () => applyHusky(flags, plan.pkgManager),
   ];
   for (const step of steps) {
     const r = step();
