@@ -11,3 +11,11 @@ if (typeof version !== "string" || version.length === 0) {
 }
 const out = resolve(here, "..", "src", "cli", "version.ts");
 writeFileSync(out, `export const VERSION = ${JSON.stringify(version)};\n`);
+
+const skillPath = resolve(here, "..", "docs", "SKILL.md");
+const skill = readFileSync(skillPath, "utf-8");
+const versionRe = /(?<=metadata:\n)  version: "[^"]*"/;
+if (!versionRe.test(skill)) {
+  throw new Error(`scripts/version.mjs: version line not found in docs/SKILL.md`);
+}
+writeFileSync(skillPath, skill.replace(versionRe, `  version: ${JSON.stringify(version)}`));
