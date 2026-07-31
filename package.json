@@ -26,7 +26,7 @@
   "scripts": {
     "prebuild": "node scripts/version.mjs",
     "build": "tsc -p tsconfig.build.json",
-    "prepublishOnly": "pnpm run build",
+    "prepublishOnly": "npm run build",
     "test": "vitest run",
     "lint": "eslint .",
     "prepare": "husky"
