@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-07-31
+
 ### Removed
 - `.npmrc`: removed redundant `public-hoist-pattern` config to avoid npm unknown config warnings during publish.
 
