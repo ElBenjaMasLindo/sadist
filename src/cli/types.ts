@@ -45,3 +45,8 @@ export type InstallPlan = {
   readonly willCreate: readonly string[];
   readonly willWarn: readonly string[];
 };
+
+export type SkillFlags = {
+  readonly force: boolean;
+  readonly dryRun: boolean;
+};

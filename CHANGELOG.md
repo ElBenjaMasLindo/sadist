@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - `scripts/version.mjs`: now also syncs `package.json#version` into the `metadata.version` field of `docs/SKILL.md` during `prebuild`, keeping the published skill version in lockstep with the package.
+- `sadist skill` subcommand: installs or updates `.agents/skills/sadist/SKILL.md` from the version shipped with the package. Compares the existing file's `metadata.version` with the package version: skip when up to date, prompt `[y/N]` on downgrade/upgrade, or overwrite with `--force`. Skips silently when stdin is not a TTY.
+- `sadist install`: now also copies the skill file to `.agents/skills/sadist/SKILL.md` as part of the install flow, with the same version/prompt behavior. Use `sadist skill` to install the skill standalone.
 
 ### Changed
 - `docs/SKILL.md`: now uses YAML frontmatter (`name`, `description`, `compatibility`, `license`, `metadata.version`) so the published skill file is self-describing and version-stamped.

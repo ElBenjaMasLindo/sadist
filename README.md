@@ -6,21 +6,11 @@
 
 A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability.
 
-`sadist` combines strict `tsc` compilation, exhaustive pattern matching via
-`ts-pattern`, and a small set of architectural ESLint rules into a single
-pre-commit gate. Code either passes all three layers or it doesn't get
-committed — there is no partial pass, no warning-only mode, no override
-flag for convenience.
+`sadist` combines strict `tsc` compilation, exhaustive pattern matching via `ts-pattern`, and a small set of architectural ESLint rules into a single pre-commit gate. Code either passes all three layers or it doesn't get committed — there is no partial pass, no warning-only mode, no override flag for convenience.
 
 ## Why
 
-`any`, silent `null`, unhandled `catch` blocks, and `class` abuse are the
-most common sources of preventable bugs in TypeScript codebases. This isn't
-a style linter that nudges; it's a structural gate that refuses to compile
-or lint code that leaves room for them — see
-[docs/SKILL.md](docs/SKILL.md) for the complete rule set and
-honest coverage (this gate does not, and cannot, catch business-logic bugs;
-only structural ones).
+`any`, silent `null`, unhandled `catch` blocks, and `class` abuse are the most common sources of preventable bugs in TypeScript codebases. This isn't a style linter that nudges; it's a structural gate that refuses to compile or lint code that leaves room for them — see [docs/SKILL.md](docs/SKILL.md) for the complete rule set and honest coverage (this gate does not, and cannot, catch business-logic bugs; only structural ones).
 
 ## Install
 
@@ -50,6 +40,28 @@ Flags:
 | `--dry-run` | Print the plan, don't apply changes |
 
 Run `sadist --help` for the full list.
+
+`install` also copies the agent skill file into the project
+
+### `sadist skill`
+
+Installs or updates the sadist agent skill file, if you want to handle it separately, Use this to add or refresh the skill without running the full installer.
+
+```bash
+npx sadist skill
+# or
+pnpm dlx sadist skill
+```
+
+Flags:
+
+| Flag | Effect |
+|------|--------|
+| `--force` | Overwrite the existing skill file without prompting |
+| `--dry-run` | Print the plan, don't apply changes |
+| `--help` | Show help |
+
+If the file exists with a different version, you'll be prompted `Overwrite with vX.Y.Z? [y/N]`. Press `y` to confirm or any other key to skip.
 
 The C.L.I installation process may, in semi-rare cases, fail. If that happens, follow the manual setup below.
 
@@ -159,7 +171,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for rules on adding new rules and pre-PR 
 
 ## License
 
-[Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/) — behaves like MIT when you
-`npm install` and use it as-is: no copyleft obligation on your code. Only
-applies if you modify sadist's own source files. See [LICENSE](LICENSE) for
-full terms.
+[Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/) — behaves like MIT when you `npm install` and use it as-is: no copyleft obligation on your code. Only applies if you modify sadist's own source files. See [LICENSE](LICENSE) for full terms.
