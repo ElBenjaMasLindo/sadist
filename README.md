@@ -97,7 +97,7 @@ type User = {
 Error output:
 
 ```
-src/user.ts:3:10 - error: Domain types must not contain null or undefined. Use Option<T> instead.
+src/user.ts:3:10 - error: No null in domain code. Use Option<T> instead.
 ```
 
 Fix with `Option<T>`:
@@ -118,15 +118,16 @@ type User = {
 
 | Rule | What it blocks |
 |------|----------------|
-| `no-any-in-domain-types` | `any` in type aliases, interfaces, function signatures |
-| `no-null-in-domain-types` | `null`/`undefined` in type aliases, interfaces, properties |
-| `no-primitive-obsession` | Raw primitives (`string`, `number`, `boolean`) in object properties |
-| `no-class-in-domain` | `class` in domain logic (allowed only in `src/adapters/`) |
-| `no-non-null-assertion-in-domain` | `!` non-null assertions |
-| `no-single-use-generics` | Generic type parameters used only once |
-| `no-ts-pattern-otherwise` | `.otherwise()` instead of `.exhaustive()` on `ts-pattern` matches |
-| `no-ts-suppressions` | `@ts-ignore`, `@ts-expect-error`, `as unknown as X` |
 | `no-throw-outside-adapters` | `throw` statements outside `src/adapters/` |
+| `no-null-in-domain-types` | `null`/`undefined` anywhere in domain code (not just inside named types) |
+| `no-single-use-generics` | Generic type parameters used fewer than two places (counted via AST, not text) |
+| `no-primitive-obsession` | Raw primitives (`string`, `number`) under ID-named properties; recognizes `id`, `user_id`, `userID`, and nested wrappers like `Option<string>` |
+| `require-ts-pattern-exhaustive` | `ts-pattern` chains that end in `.otherwise()` or have no terminal call — must end in `.exhaustive()` |
+| `no-ts-suppressions` | `as unknown as X` double casts (with `// sadist-exception: SADIST-123` escape hatch) |
+| `@typescript-eslint/no-explicit-any` | `any` type usage |
+| `@typescript-eslint/no-non-null-assertion` | `!` non-null assertions |
+| `@typescript-eslint/ban-ts-comment` | `@ts-ignore`, `@ts-expect-error` (with `// sadist-exception: SADIST-123` escape hatch) |
+| `no-restricted-syntax` | `class` declarations and expressions (with `// sadist-exception: SADIST-123` escape hatch) |
 | `complexity` | Cyclomatic complexity > 6 |
 | `max-lines-per-function` | Functions > 20 lines |
 | `max-params` | Functions > 3 parameters |
@@ -147,7 +148,6 @@ Enables all rules as errors. No warning-only mode, no partial overrides.
 ## Known limitations
 
 - Does not catch business-logic bugs (only structural ones)
-- Requires `ts-pattern` for exhaustive pattern matching (not enforced by rules)
 - No autofix for architectural violations (by design)
 - Assumes `src/adapters/` directory exists for throw statements
 

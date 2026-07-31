@@ -9,9 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 - `AGENTS.md` with project maintenance guidelines (releases, code, rules, build, design philosophy).
+- `require-ts-pattern-exhaustive` rule: enforces `.exhaustive()` as the terminal call on `ts-pattern` chains. Catches both `.otherwise()` and chains with no terminal call.
+- `no-ts-suppressions` rule: flags `as unknown as X` double casts only. `@ts-ignore` and `@ts-expect-error` are delegated to `@typescript-eslint/ban-ts-comment`.
+- `_shared/sadist-exception.ts` utility: `sadist-exception:` comment check, requiring a real ticket format (`SADIST-123` or `#456`).
+- `_shared/ast-walk.ts` utility: generic AST walker providing `countTypeReferences` and `containsPrimitiveKeyword` for rule code.
+- `scripts/version.mjs`: pre-build script that reads `package.json#version` and writes `src/cli/version.ts`, replacing the hardcoded version in the CLI.
 
 ### Changed
-- `README.md` restructured: added Quickstart (CLI) section, Manual Setup with numbered steps, and updated rules table with all 9 ESLint rules.
+- `README.md` restructured: added Quickstart (CLI) section, Manual Setup with numbered steps, and updated rules table.
+- `no-null-in-domain-types`: now fires on any `null`/`undefined` keyword, not just inside named type aliases/interfaces. Inline `string | null` in function signatures is now caught.
+- `no-primitive-obsession`: detects `id`, `user_id`, and `userID` (not just `userId`), and searches recursively inside `Option<T>` / `T[]` wrappers.
+- `no-single-use-generics`: counts `TSTypeReference` via AST walk instead of regex on source text. Threshold lowered from `<= 2` to `<= 1`.
+- `no-throw-outside-adapters`: removed inline `filename.includes("/adapters/")` check; the domain/adapters boundary now lives in config.
+- `src/config/strict.ts`: domain/adapters boundary enforced by ESLint `files`/`ignores` globs, not by inline path checks inside each rule. Uses `@typescript-eslint/eslint-plugin` rules (`no-explicit-any`, `no-non-null-assertion`, `ban-ts-comment`) and `no-restricted-syntax` with `ClassDeclaration`/`ClassExpression` selectors, replacing the deleted custom rules.
+- `src/rules/index.ts`: now exports 6 rules (`no-throw-outside-adapters`, `no-null-in-domain-types`, `no-single-use-generics`, `no-primitive-obsession`, `require-ts-pattern-exhaustive`, `no-ts-suppressions`).
+- `src/cli/install.ts`: `computeMissing` reads the sadist version from `src/cli/version.ts` (generated at build time) instead of hardcoding `"0.1.0"`. Adds `@typescript-eslint/eslint-plugin` to the dev dependencies installed for the consumer.
+- `package.json`: added `@typescript-eslint/eslint-plugin` (8.48.1) as a `dependency` so the config's plugin import resolves at consumer load time. Added `prebuild` script.
+- `docs/SKILL.md`: Gate coverage section updated — all 8 rules are now machine-enforced, with rule 4 delegated to `no-restricted-syntax` and rule 5 split across `@typescript-eslint/no-explicit-any`, `@typescript-eslint/no-non-null-assertion`, `@typescript-eslint/ban-ts-comment`, and `sadist/no-ts-suppressions`.
+- Tests updated to reflect new behavior: `no-primitive-obsession` (branded type via alias instead of inline intersection), `no-throw-outside-adapters` (filename exemption moved to config). New tests added for `require-ts-pattern-exhaustive` and `no-ts-suppressions`.
 
 ## [0.2.0] - 2026-07-30
 

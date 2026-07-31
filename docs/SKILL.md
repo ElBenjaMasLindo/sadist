@@ -53,15 +53,3 @@ Read the `tsc`/ESLint error verbatim — it names the exact rule and location. F
 ## Scope
 
 This gate catches structural bugs (null handling, unhandled cases, exceptions, unsafe casts). It does not catch business-logic errors — correct types with wrong logic still pass. Test logic separately.
-
-## Gate coverage
-
-Rules enforced by the ESLint gate (commit-blocking):
-1, 2, 4, 6, 7, 8 — plus `any` and `!` from rule 5.
-
-Rules enforced by convention only (not commit-blocking):
-- Rule 3: `.exhaustive()` on `ts-pattern` matches. The gate cannot detect
-  `.otherwise()` misuse — this is a human-review rule.
-- Rule 5 partial: `@ts-ignore`, `@ts-expect-error`, and `as unknown as X`
-  are not machine-enforced. These require `@typescript-eslint` plugin rules
-  which this gate does not bundle.
