@@ -1,5 +1,6 @@
 import { match, P } from "ts-pattern";
 import { runInstallCommand } from "./install.js";
+import { runSkillCommand } from "./skill.js";
 
 const argv = process.argv.slice(2);
 const sub = argv[0] ?? "install";
@@ -8,6 +9,9 @@ const rest = argv.slice(1);
 match(sub)
   .with("install", () => {
     runCommand(runInstallCommand(rest));
+  })
+  .with("skill", () => {
+    runCommand(runSkillCommand(rest));
   })
   .with("--help", () => {
     printUsage();
@@ -44,9 +48,10 @@ function printUsage(): void {
       "",
       "usage:",
       "  sadist install [flags]    configure a project with the gate",
+      "  sadist skill [flags]      install or update the sadist skill file",
       "  sadist --help             show this help",
       "",
-      "flags:",
+      "install flags:",
       "  --no-husky     skip pre-commit hook setup",
       "  --no-tsconfig  skip tsconfig.json creation",
       "  --force        overwrite existing files",

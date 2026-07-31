@@ -8,6 +8,7 @@ import {
   writeText,
 } from "./files.js";
 import { addCmd, detectPkgManager, exec, isGitRepo } from "./process.js";
+import { applySkill, planSkill } from "./skill.js";
 import {
   eslintConfigTemplate,
   gitignoreTemplate,
@@ -54,6 +55,7 @@ function collectPlans(pkg: PkgJson, flags: InstallFlags, out: PlanOut): void {
   planModuleType(pkg, out);
   planHusky(flags, pkg, out);
   planGitignore(out);
+  planSkill(out);
 }
 
 function planEslint(out: PlanOut): void {
@@ -304,6 +306,7 @@ function executeSteps(
     () => applyPackageJson(pkg, flags),
     () => applyConfigs(flags, flags.force),
     () => applyHusky(flags, plan.pkgManager),
+    () => applySkill({ force: flags.force, dryRun: flags.dryRun }),
   ];
   for (const step of steps) {
     const r = step();
