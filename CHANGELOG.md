@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-07-31
+
 ### Added
 - `scripts/version.mjs`: now also syncs `package.json#version` into the `metadata.version` field of `docs/SKILL.md` during `prebuild`, keeping the published skill version in lockstep with the package.
 - `sadist skill` subcommand: installs or updates `.agents/skills/sadist/SKILL.md` from the version shipped with the package. Compares the existing file's `metadata.version` with the package version: skip when up to date, prompt `[y/N]` on downgrade/upgrade, or overwrite with `--force`. Skips silently when stdin is not a TTY.
@@ -14,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 - `docs/SKILL.md`: now uses YAML frontmatter (`name`, `description`, `compatibility`, `license`, `metadata.version`) so the published skill file is self-describing and version-stamped.
-- `AGENTS.md`: added reminder to run `pnpm run build` before publishing to sync `docs/SKILL.md` version.
 
 ## [0.3.0] - 2026-07-30
 
@@ -37,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `src/cli/install.ts`: `computeMissing` reads the sadist version from `src/cli/version.ts` (generated at build time) instead of hardcoding `"0.1.0"`. Adds `@typescript-eslint/eslint-plugin` to the dev dependencies installed for the consumer.
 - `package.json`: added `@typescript-eslint/eslint-plugin` (8.48.1) as a `dependency` so the config's plugin import resolves at consumer load time. Added `prebuild` script.
 - `docs/SKILL.md`: removed the "Gate coverage" section; rule coverage is now visible directly in `src/config/strict.ts`.
-- Tests updated to reflect new behavior: `no-primitive-obsession` (branded type via alias instead of inline intersection), `no-throw-outside-adapters` (filename exemption moved to config). New tests added for `require-ts-pattern-exhaustive` and `no-ts-suppressions`.
+- Tests updated to reflect new behavior: `no-primitive-obsession` (branded type via alias instead of inline intersection), `no-throw-outside-adapters` (filename exemption moved to config). New tests  added for `require-ts-pattern-exhaustive` and `no-ts-suppressions`.
 
 ## [0.2.0] - 2026-07-30
 
@@ -64,7 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Example project (`examples/minimal-project`)
 - CI workflow (GitHub Actions)
 
-[Unreleased]: https://github.com/ElBenjaMasLindo/folex/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/ElBenjaMasLindo/folex/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ElBenjaMasLindo/folex/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ElBenjaMasLindo/folex/releases/tag/v0.1.0
