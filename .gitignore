@@ -2,7 +2,10 @@
 node_modules/
 .pnpm-store/
 dist/
+
+# Prebuild Artifacts
 src/cli/version.ts
+src/cli/embedded_skill.ts
 
 # Nix
 .direnv/

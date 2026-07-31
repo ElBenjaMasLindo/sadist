@@ -1,8 +1,7 @@
-import { readFileSync, readSync } from "node:fs";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readSync } from "node:fs";
 import { match, P } from "ts-pattern";
 import { pathExists, readText, writeText } from "./files.js";
+import { EMBEDDED_SKILL } from "./embedded_skill.js";
 import type { Option, Result, SkillFlags } from "./types.js";
 import { VERSION } from "./version.js";
 
@@ -35,13 +34,7 @@ export function extractVersion(content: string): Option<string> {
 }
 
 function readShippedSkill(): Result<string, string> {
-  const here = dirname(fileURLToPath(import.meta.url));
-  try {
-    const path = resolve(here, "..", "..", "docs", "SKILL.md");
-    return { ok: true, value: readFileSync(path, "utf-8") };
-  } catch (e) {
-    return { ok: false, error: `cannot read shipped skill: ${String(e)}` };
-  }
+  return { ok: true, value: EMBEDDED_SKILL };
 }
 
 function promptOverwrite(fromVersion: string): boolean {
