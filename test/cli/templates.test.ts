@@ -40,30 +40,42 @@ describe("tsconfigTemplate", () => {
 });
 
 describe("preCommitTemplate", () => {
-  it("runs npm run gate by default", () => {
-    expect(preCommitTemplate()).toContain("npm run gate");
+  it("runs npm run gate by default for npm manager", () => {
+    expect(preCommitTemplate()).toBe("npm run gate\n");
   });
 
-  it("runs pnpm run gate for pnpm", () => {
-    expect(preCommitTemplate("pnpm")).toContain("pnpm run gate");
+  it("checks pnpm and falls back to npm for pnpm manager", () => {
+    const template = preCommitTemplate("pnpm");
+    expect(template).toBe(
+      "if command -v pnpm >/dev/null 2>&1; then\n  pnpm run gate\nelse\n  npm run gate\nfi\n",
+    );
   });
 
-  it("runs yarn gate for yarn", () => {
-    expect(preCommitTemplate("yarn")).toContain("yarn gate");
+  it("checks yarn and falls back to npm for yarn manager", () => {
+    const template = preCommitTemplate("yarn");
+    expect(template).toBe(
+      "if command -v yarn >/dev/null 2>&1; then\n  yarn gate\nelse\n  npm run gate\nfi\n",
+    );
   });
 });
 
 describe("prePushTemplate", () => {
-  it("runs npm run gate:full by default", () => {
-    expect(prePushTemplate()).toContain("npm run gate:full");
+  it("runs npm run gate:full by default for npm manager", () => {
+    expect(prePushTemplate()).toBe("npm run gate:full\n");
   });
 
-  it("runs pnpm run gate:full for pnpm", () => {
-    expect(prePushTemplate("pnpm")).toContain("pnpm run gate:full");
+  it("checks pnpm and falls back to npm for pnpm manager", () => {
+    const template = prePushTemplate("pnpm");
+    expect(template).toBe(
+      "if command -v pnpm >/dev/null 2>&1; then\n  pnpm run gate:full\nelse\n  npm run gate:full\nfi\n",
+    );
   });
 
-  it("runs yarn gate:full for yarn", () => {
-    expect(prePushTemplate("yarn")).toContain("yarn gate:full");
+  it("checks yarn and falls back to npm for yarn manager", () => {
+    const template = prePushTemplate("yarn");
+    expect(template).toBe(
+      "if command -v yarn >/dev/null 2>&1; then\n  yarn gate:full\nelse\n  npm run gate:full\nfi\n",
+    );
   });
 });
 

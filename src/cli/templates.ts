@@ -29,16 +29,20 @@ export const tsconfigTemplate = `{
 }
 `;
 
-export function preCommitTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {
-  if (pkgManager === "pnpm") return "pnpm run gate\n";
-  if (pkgManager === "yarn") return "yarn gate\n";
-  return "npm run gate\n";
+export function preCommitTemplate(
+  pkgManager: "pnpm" | "yarn" | "npm" = "npm",
+): string {
+  if (pkgManager === "npm") return "npm run gate\n";
+  const cmd = pkgManager === "yarn" ? "yarn gate" : "pnpm run gate";
+  return `if command -v ${pkgManager} >/dev/null 2>&1; then\n  ${cmd}\nelse\n  npm run gate\nfi\n`;
 }
 
-export function prePushTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {
-  if (pkgManager === "pnpm") return "pnpm run gate:full\n";
-  if (pkgManager === "yarn") return "yarn gate:full\n";
-  return "npm run gate:full\n";
+export function prePushTemplate(
+  pkgManager: "pnpm" | "yarn" | "npm" = "npm",
+): string {
+  if (pkgManager === "npm") return "npm run gate:full\n";
+  const cmd = pkgManager === "yarn" ? "yarn gate:full" : "pnpm run gate:full";
+  return `if command -v ${pkgManager} >/dev/null 2>&1; then\n  ${cmd}\nelse\n  npm run gate:full\nfi\n`;
 }
 
 export function gateFullScriptTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {

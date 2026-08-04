@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Added `gate:full` script (`<pkgManager> run gate && <pkgManager> run build`) and `.husky/pre-push` hook.
 - `sadist install`: CLI now automatically configures `package.json#scripts.gate:full` and `.husky/pre-push` alongside `gate` and `pre-commit` for all installed projects.
 
+### Fixed
+- `sadist install`: pre-commit and pre-push hook templates now generate portable shell scripts with a fallback to `npm` so contributors without the primary package manager (`pnpm`/`yarn`) installed globally can still commit and push.
+
 ### Changed
 - Relicensed project from MPL-2.0 to MIT.
 - Updated `.husky/pre-commit` to execute `pnpm run gate`.

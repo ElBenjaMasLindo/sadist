@@ -1,1 +1,6 @@
-pnpm run gate
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm run gate
+else
+  npm run gate
+fi
+
