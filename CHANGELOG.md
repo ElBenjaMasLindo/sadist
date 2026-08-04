@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-08-04
+
 ### Added
 - Added `gate:full` script (`<pkgManager> run gate && <pkgManager> run build`) and `.husky/pre-push` hook.
 - `sadist install`: CLI now automatically configures `package.json#scripts.gate:full` and `.husky/pre-push` alongside `gate` and `pre-commit` for all installed projects.
@@ -100,8 +102,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Example project (`examples/minimal-project`)
 - CI workflow (GitHub Actions)
 
-
-[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.3...HEAD
+[Unreleased]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.3...v0.6.0
 [0.5.3]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.5.0...v0.5.1
@@ -110,4 +112,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 [0.3.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ElBenjaMasLindo/sadist/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ElBenjaMasLindo/sadist/releases/tag/v0.1.0
-
