@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Relicensed project from MPL-2.0 to MIT.
+
 ## [0.5.3] - 2026-07-31
 
 ### Fixed

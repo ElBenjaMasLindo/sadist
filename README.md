@@ -1,8 +1,8 @@
 # sadist
 
-[![License: MPL-2.0](https://img.shields.io/badge/License-MPL--2.0-blue.svg)](LICENSE)
 [![npm version](https://img.shields.io/npm/v/sadist.svg)](https://www.npmjs.com/package/sadist)
 [![CI](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml/badge.svg)](https://github.com/ElBenjaMasLindo/sadist/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/ElBenjaMasLindo/sadist.svg)](LICENSE)
 
 A sadistic TypeScript gate that holds your commit hostage until the code is no longer a liability.
 
@@ -171,4 +171,5 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for rules on adding new rules and pre-PR 
 
 ## License
 
-[Mozilla Public License 2.0](https://mozilla.org/MPL/2.0/) — behaves like MIT when you `npm install` and use it as-is: no copyleft obligation on your code. Only applies if you modify sadist's own source files. See [LICENSE](LICENSE) for full terms.
+[MIT](LICENSE) © 2026 ElBenjaMasLindo and contributors
+
