@@ -12,7 +12,6 @@ import { applySkill, planSkill } from "./skill.js";
 import {
   eslintConfigTemplate,
   gateFullScriptTemplate,
-  gitignoreTemplate,
   preCommitTemplate,
   prePushTemplate,
   tsconfigTemplate,
@@ -64,7 +63,6 @@ function collectPlans(ctx: PlanCtx): void {
   planGateScript(ctx);
   planModuleType(ctx.pkg, ctx.out);
   planHusky(ctx.flags, ctx.pkg, ctx.out);
-  planGitignore(ctx.out);
   planSkill(ctx.out);
 }
 
@@ -149,14 +147,6 @@ function planPrepare(pkg: PkgJson, out: PlanOut): void {
   }
 }
 
-function planGitignore(out: PlanOut): void {
-  if (!pathExists(".gitignore")) {
-    out.create.push(".gitignore");
-    return;
-  }
-  out.warn.push(".gitignore already exists; review recommended entries");
-}
-
 export function printPlan(plan: InstallPlan): void {
   process.stdout.write(`\n[plan] package manager: ${plan.pkgManager}\n`);
   printSection("install", plan.missing, formatDep);
@@ -231,9 +221,7 @@ type WriteCtx = { flags: InstallFlags; force: boolean };
 function writeAllConfigs(ctx: WriteCtx): Result<string, string> {
   const r1 = maybeWrite(ctx, "tsconfig.json", tsconfigTemplate);
   if (!r1.ok) return r1;
-  const r2 = maybeWrite(ctx, "eslint.config.mjs", eslintConfigTemplate);
-  if (!r2.ok) return r2;
-  return maybeWrite(ctx, ".gitignore", gitignoreTemplate);
+  return maybeWrite(ctx, "eslint.config.mjs", eslintConfigTemplate);
 }
 
 function maybeWrite(

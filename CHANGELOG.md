@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ### Fixed
 - `sadist install`: pre-commit and pre-push hook templates now generate portable shell scripts with a fallback to `npm` so contributors without the primary package manager (`pnpm`/`yarn`) installed globally can still commit and push.
 
+### Removed
+- `sadist install`: removed automatic `.gitignore` creation and warnings.
+
 ### Changed
 - Relicensed project from MPL-2.0 to MIT.
 - Updated `.husky/pre-commit` to execute `pnpm run gate`.

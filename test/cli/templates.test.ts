@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   eslintConfigTemplate,
   gateFullScriptTemplate,
-  gitignoreTemplate,
   preCommitTemplate,
   prePushTemplate,
   tsconfigTemplate,
@@ -93,16 +92,3 @@ describe("gateFullScriptTemplate", () => {
   });
 });
 
-describe("gitignoreTemplate", () => {
-  it("ignores node_modules", () => {
-    expect(gitignoreTemplate).toContain("node_modules/");
-  });
-
-  it("ignores dist", () => {
-    expect(gitignoreTemplate).toContain("dist/");
-  });
-
-  it("ignores .env files", () => {
-    expect(gitignoreTemplate).toContain(".env");
-  });
-});

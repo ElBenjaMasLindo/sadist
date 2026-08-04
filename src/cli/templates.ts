@@ -51,23 +51,3 @@ export function gateFullScriptTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "np
   return "npm run gate && npm run build";
 }
 
-export const gitignoreTemplate = `# dependencies
-node_modules/
-.pnpm-store/
-
-# build output
-dist/
-
-# environment
-.env
-.env.*
-
-# editor
-.vscode/
-.idea/
-.zed/
-
-# os
-.DS_Store
-Thumbs.db
-`;
