@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Added `pretest` script (`node scripts/version.mjs`) to generate `src/cli/version.ts` before running Vitest, preventing missing module errors on clean test runs.
+
 ## [0.6.0] - 2026-08-04
 
 ### Added

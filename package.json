@@ -25,6 +25,7 @@
   "files": ["dist", "bin", "docs/SKILL.md"],
   "scripts": {
     "prebuild": "node scripts/version.mjs",
+    "pretest": "node scripts/version.mjs",
     "build": "tsc -p tsconfig.build.json",
     "prepublishOnly": "npm run build",
     "test": "vitest run",
