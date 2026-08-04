@@ -2,12 +2,12 @@
 - Commits: [Conventional Commits](https://www.conventionalcommits.org/).
 - Version in `package.json`. CHANGELOG follows [Keep a Changelog](https://keepachangelog.com/).
 - Bump: edit `version` + add `CHANGELOG.md` entry. Move `[Unreleased]` → version header before publish.
-- Run `pnpm run build` before release.
+- Run `npm run build` before release.
 - SemVer: `0.x` → breaking in MINOR. `1.0.0` → stable API.
 
 # Code
 - Smallest diff. Never touch unrelated code. No new deps without request. Follow `src/` patterns.
-- Gate must stay green: husky runs `pnpm run gate` on commit and `pnpm run gate:full` on push. CI runs build + lint + test on push/PR.
+- Gate must stay green: husky runs `npm run gate` on commit and `npm run gate:full` on push. CI runs build + lint + test on push/PR.
 
 # Adding Rules
 Per `CONTRIBUTING.md`:
@@ -16,7 +16,7 @@ Per `CONTRIBUTING.md`:
 - New rule → tests in `test/rules/` + update `docs/SKILL.md`.
 
 # Build
-- `pnpm build` → `tsc -p tsconfig.build.json` (src/ → dist/).
+- `npm build` → `tsc -p tsconfig.build.json` (src/ → dist/).
 - `prepublishOnly` auto-builds. Never bypass.
 - `dist/` in .gitignore, shipped via npm `files`.
 - TS: `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`. ES2022, NodeNext, ESM.

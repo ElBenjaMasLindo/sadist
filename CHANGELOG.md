@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Updated `gate` and `gate:full` scripts in `package.json` and build instructions in `AGENTS.md` to use `npm` instead of `pnpm`.
+
 ### Fixed
 - Added `pretest` script (`node scripts/version.mjs`) to generate `src/cli/version.ts` before running Vitest, preventing missing module errors on clean test runs.
 
