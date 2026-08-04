@@ -35,6 +35,18 @@ export function preCommitTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): 
   return "npm run gate\n";
 }
 
+export function prePushTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {
+  if (pkgManager === "pnpm") return "pnpm run gate:full\n";
+  if (pkgManager === "yarn") return "yarn gate:full\n";
+  return "npm run gate:full\n";
+}
+
+export function gateFullScriptTemplate(pkgManager: "pnpm" | "yarn" | "npm" = "npm"): string {
+  if (pkgManager === "pnpm") return "pnpm run gate && pnpm run build";
+  if (pkgManager === "yarn") return "yarn gate && yarn build";
+  return "npm run gate && npm run build";
+}
+
 export const gitignoreTemplate = `# dependencies
 node_modules/
 .pnpm-store/

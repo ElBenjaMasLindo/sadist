@@ -11,8 +11,10 @@ import { addCmd, detectPkgManager, exec, isGitRepo } from "./process.js";
 import { applySkill, planSkill } from "./skill.js";
 import {
   eslintConfigTemplate,
+  gateFullScriptTemplate,
   gitignoreTemplate,
   preCommitTemplate,
+  prePushTemplate,
   tsconfigTemplate,
 } from "./templates.js";
 import type {
@@ -26,6 +28,13 @@ import type {
 const GATE_SCRIPT = "eslint . && tsc --noEmit";
 const PREPARE_SCRIPT = "husky";
 
+type PlanCtx = {
+  readonly pkg: PkgJson;
+  readonly flags: InstallFlags;
+  readonly pkgManager: "pnpm" | "yarn" | "npm";
+  readonly out: PlanOut;
+};
+
 export function buildPlan(
   pkg: PkgJson,
   flags: InstallFlags,
@@ -33,7 +42,8 @@ export function buildPlan(
   const pkgManager = detectPkgManager();
   const missing = computeMissing(pkg, flags);
   const out = emptyOut();
-  collectPlans(pkg, flags, out);
+  const ctx: PlanCtx = { pkg, flags, pkgManager, out };
+  collectPlans(ctx);
   return ok({
     pkgManager,
     missing,
@@ -48,14 +58,14 @@ function emptyOut(): PlanOut {
   return { create: [], warn: [] };
 }
 
-function collectPlans(pkg: PkgJson, flags: InstallFlags, out: PlanOut): void {
-  planEslint(out);
-  planTsconfig(flags, out);
-  planGateScript(pkg, out);
-  planModuleType(pkg, out);
-  planHusky(flags, pkg, out);
-  planGitignore(out);
-  planSkill(out);
+function collectPlans(ctx: PlanCtx): void {
+  planEslint(ctx.out);
+  planTsconfig(ctx.flags, ctx.out);
+  planGateScript(ctx);
+  planModuleType(ctx.pkg, ctx.out);
+  planHusky(ctx.flags, ctx.pkg, ctx.out);
+  planGitignore(ctx.out);
+  planSkill(ctx.out);
 }
 
 function planEslint(out: PlanOut): void {
@@ -79,15 +89,24 @@ function planTsconfig(flags: InstallFlags, out: PlanOut): void {
   );
 }
 
-function planGateScript(pkg: PkgJson, out: PlanOut): void {
-  const current = pkg.scripts["gate"];
+function planGateScript(ctx: PlanCtx): void {
+  planOneScript(ctx, "gate", GATE_SCRIPT);
+  planOneScript(ctx, "gate:full", gateFullScriptTemplate(ctx.pkgManager));
+}
+
+function planOneScript(
+  ctx: PlanCtx,
+  name: string,
+  expected: string,
+): void {
+  const current = ctx.pkg.scripts[name];
   if (!current) {
-    out.create.push("package.json#scripts.gate");
+    ctx.out.create.push(`package.json#scripts.${name}`);
     return;
   }
-  if (current !== GATE_SCRIPT) {
-    out.warn.push(
-      `package.json#scripts.gate exists with value "${current}"; expected "${GATE_SCRIPT}"`,
+  if (current !== expected) {
+    ctx.out.warn.push(
+      `package.json#scripts.${name} exists with value "${current}"; expected "${expected}"`,
     );
   }
 }
@@ -106,11 +125,20 @@ function planModuleType(pkg: PkgJson, out: PlanOut): void {
 
 function planHusky(flags: InstallFlags, pkg: PkgJson, out: PlanOut): void {
   if (flags.noHusky) return;
-  if (!pathExists(".husky/pre-commit")) {
-    out.create.push(".husky/pre-commit");
+  planHook(".husky/pre-commit", out);
+  planHook(".husky/pre-push", out);
+  planPrepare(pkg, out);
+}
+
+function planHook(file: string, out: PlanOut): void {
+  if (!pathExists(file)) {
+    out.create.push(file);
   } else {
-    out.warn.push(".husky/pre-commit already exists");
+    out.warn.push(`${file} already exists`);
   }
+}
+
+function planPrepare(pkg: PkgJson, out: PlanOut): void {
   const prep = pkg.scripts["prepare"];
   if (!prep) {
     out.create.push("package.json#scripts.prepare");
@@ -227,11 +255,12 @@ function mustWrite(ctx: WriteCtx, file: string): boolean {
 export function applyPackageJson(
   pkg: PkgJson,
   flags: InstallFlags,
+  pkgManager: "pnpm" | "yarn" | "npm" = detectPkgManager(),
 ): Result<string, string> {
   if (flags.dryRun) return { ok: true, value: "dry-run" };
   const currentPkgR = readPkg();
   if (!currentPkgR.ok) return currentPkgR;
-  const next = buildNextPkg(currentPkgR.value, flags);
+  const next = buildNextPkg(currentPkgR.value, flags, pkgManager);
   const json = `${JSON.stringify(next, null, 2)}\n`;
   return writeText("package.json", json);
 }
@@ -239,8 +268,9 @@ export function applyPackageJson(
 function buildNextPkg(
   pkg: PkgJson,
   flags: InstallFlags,
+  pkgManager: "pnpm" | "yarn" | "npm",
 ): Record<string, unknown> {
-  const scripts = mergeScripts(pkg, flags);
+  const scripts = mergeScripts(pkg, flags, pkgManager);
   return {
     ...pkg.root,
     type: pkg.type.some ? pkg.type.value : "module",
@@ -248,9 +278,16 @@ function buildNextPkg(
   };
 }
 
-function mergeScripts(pkg: PkgJson, flags: InstallFlags): Record<string, string> {
+function mergeScripts(
+  pkg: PkgJson,
+  flags: InstallFlags,
+  pkgManager: "pnpm" | "yarn" | "npm",
+): Record<string, string> {
   const scripts: Record<string, string> = { ...pkg.scripts };
   if (!scripts["gate"]) scripts["gate"] = GATE_SCRIPT;
+  if (!scripts["gate:full"]) {
+    scripts["gate:full"] = gateFullScriptTemplate(pkgManager);
+  }
   if (!flags.noHusky && !scripts["prepare"]) {
     scripts["prepare"] = PREPARE_SCRIPT;
   }
@@ -272,8 +309,14 @@ function writeHuskyHook(
   if (!isGitRepo()) {
     return { ok: false, error: ".git not found; init a repo before husky" };
   }
-  if (!pathExists(".husky/pre-commit")) {
-    const r = writeText(".husky/pre-commit", preCommitTemplate(pkgManager), 0o755);
+  const r1 = writeHook(".husky/pre-commit", preCommitTemplate(pkgManager));
+  if (!r1.ok) return r1;
+  return writeHook(".husky/pre-push", prePushTemplate(pkgManager));
+}
+
+function writeHook(file: string, content: string): Result<string, string> {
+  if (!pathExists(file)) {
+    const r = writeText(file, content, 0o755);
     if (!r.ok) return r;
   }
   return { ok: true, value: "husky" };

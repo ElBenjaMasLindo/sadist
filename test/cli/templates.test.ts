@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   eslintConfigTemplate,
+  gateFullScriptTemplate,
   gitignoreTemplate,
   preCommitTemplate,
+  prePushTemplate,
   tsconfigTemplate,
 } from "../../src/cli/templates.js";
 
@@ -48,6 +50,34 @@ describe("preCommitTemplate", () => {
 
   it("runs yarn gate for yarn", () => {
     expect(preCommitTemplate("yarn")).toContain("yarn gate");
+  });
+});
+
+describe("prePushTemplate", () => {
+  it("runs npm run gate:full by default", () => {
+    expect(prePushTemplate()).toContain("npm run gate:full");
+  });
+
+  it("runs pnpm run gate:full for pnpm", () => {
+    expect(prePushTemplate("pnpm")).toContain("pnpm run gate:full");
+  });
+
+  it("runs yarn gate:full for yarn", () => {
+    expect(prePushTemplate("yarn")).toContain("yarn gate:full");
+  });
+});
+
+describe("gateFullScriptTemplate", () => {
+  it("runs npm run gate && npm run build by default", () => {
+    expect(gateFullScriptTemplate()).toBe("npm run gate && npm run build");
+  });
+
+  it("runs pnpm run gate && pnpm run build for pnpm", () => {
+    expect(gateFullScriptTemplate("pnpm")).toBe("pnpm run gate && pnpm run build");
+  });
+
+  it("runs yarn gate && yarn build for yarn", () => {
+    expect(gateFullScriptTemplate("yarn")).toBe("yarn gate && yarn build");
   });
 });
 

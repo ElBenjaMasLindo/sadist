@@ -7,7 +7,7 @@
 
 # Code
 - Smallest diff. Never touch unrelated code. No new deps without request. Follow `src/` patterns.
-- Gate must stay green: husky runs `pnpm run lint && pnpm test` on commit. CI runs build + lint + test on push/PR.
+- Gate must stay green: husky runs `pnpm run gate` on commit and `pnpm run gate:full` on push. CI runs build + lint + test on push/PR.
 
 # Adding Rules
 Per `CONTRIBUTING.md`:

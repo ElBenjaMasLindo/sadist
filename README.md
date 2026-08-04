@@ -76,14 +76,15 @@ import strict from "sadist/config/strict";
 export default [...strict];
 ```
 
-### 2. Gate script
+### 2. Gate scripts
 
-Add a gate script to `package.json`:
+Add gate scripts to `package.json`:
 
 ```json
 {
   "scripts": {
-    "gate": "eslint . && tsc --noEmit"
+    "gate": "eslint . && tsc --noEmit",
+    "gate:full": "npm run gate && npm run build"
   }
 }
 ```

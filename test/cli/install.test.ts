@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyConfigs, applyHusky, applyPackageJson } from "../../src/cli/install.js";
+import { applyConfigs, applyHusky, applyPackageJson, buildPlan } from "../../src/cli/install.js";
 import type { InstallFlags, PkgJson } from "../../src/cli/types.js";
 
 const baseFlags: InstallFlags = {
@@ -18,6 +18,20 @@ const basePkg: PkgJson = {
   devDependencies: {},
   root: { name: "x", version: "1.0.0" },
 };
+
+describe("buildPlan", () => {
+  it("plans creation or warning of gate, gate:full, pre-commit, and pre-push", () => {
+    const r = buildPlan(basePkg, baseFlags);
+    expect(r.ok).toBe(true);
+    if (r.ok) {
+      const allPlanned = [...r.value.willCreate, ...r.value.willWarn];
+      expect(allPlanned.some((item) => item.includes("scripts.gate"))).toBe(true);
+      expect(allPlanned.some((item) => item.includes("scripts.gate:full"))).toBe(true);
+      expect(allPlanned.some((item) => item.includes(".husky/pre-commit"))).toBe(true);
+      expect(allPlanned.some((item) => item.includes(".husky/pre-push"))).toBe(true);
+    }
+  });
+});
 
 describe("applyPackageJson (dry-run)", () => {
   it("does not write to disk and reports dry-run", () => {
